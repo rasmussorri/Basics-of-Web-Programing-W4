@@ -143,9 +143,12 @@
             const query = params.get('q');
 
             if (query) {
+
                 const sanitizedQuery = sanitizeQuery(query);
                 inputShow.value = sanitizedQuery;
                 fetchShows(sanitizedQuery);
+                inputShow.value = query;
+                fetchShows(query);
             }
         });
     </script>
