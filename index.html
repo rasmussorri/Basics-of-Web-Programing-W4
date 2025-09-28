@@ -76,13 +76,13 @@
     </nav>
     
     <div class="container">
-        <div class="show-container"></div>
+        <div class="show-container" id="show-container"></div>
     </div>
 
     <script>
         const inputShow = document.getElementById('input-show');
         const submitButton = document.getElementById('submit-data');
-        const showContainer = document.querySelector('.show-container');
+        const showContainer = document.getElementById('show-container');
 
         function clearResults() {
             showContainer.innerHTML = '';
