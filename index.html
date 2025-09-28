@@ -107,14 +107,27 @@
             return showData;
         }
 
-        async function fetchShows(query) {
+        function sanitizeQuery(query) {
+            if (!query) {
+                return '';
+            }
+
+            try {
+                return decodeURIComponent(query);
+            } catch (error) {
+                return query;
+            }
+        }
+
+        async function fetchShows(rawQuery) {
+            const query = sanitizeQuery(rawQuery);
             console.log('Fetching shows for query:', query);
             try {
                 const response = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`);
                 const data = await response.json();
-                
+
                 clearResults();
-                
+
                 data.forEach(show => {
                     const showElement = createShowElement(show);
                     showContainer.appendChild(showElement);
@@ -130,6 +143,10 @@
             const query = params.get('q');
 
             if (query) {
+
+                const sanitizedQuery = sanitizeQuery(query);
+                inputShow.value = sanitizedQuery;
+                fetchShows(sanitizedQuery);
                 inputShow.value = query;
                 fetchShows(query);
             }
